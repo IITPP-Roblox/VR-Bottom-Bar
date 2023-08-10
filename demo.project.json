@@ -1,0 +1,23 @@
+{
+    "name": "VRBottomBarPlace",
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "$path": "./demo/ReplicatedStorage",
+            "Icon": {
+                "$path": "./demo/module/TopbarPlus/src/Icon"
+            },
+            "VRBottomBar": {
+                "$path": "."
+            }
+        },
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+            "StarterPlayerScripts": {
+                "$className": "StarterPlayerScripts",
+                "$path": "./demo/StarterPlayerScripts"
+            }
+        }
+    }
+}
