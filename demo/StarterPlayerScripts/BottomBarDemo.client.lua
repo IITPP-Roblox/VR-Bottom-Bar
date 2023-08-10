@@ -40,3 +40,19 @@ else
     --DO NOT RUN THIS IN NORMAL GAMES. THIS IS ONLY FOR THE DEMO.
     VRBottomBar:ForceSetUp()
 end
+
+local Buttons = {}
+for i = 1, 4 do
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(0.6 + (0.2 * i), 0, 1, 0)
+    Button.SizeConstraint = Enum.SizeConstraint.RelativeYY
+    Button.TextScaled = true
+    Button.Text = tostring(i)
+    --Button.Parent = Somewhere --Make sure to parent any frames somewhere so that there is a fallback option when this eventually breaks.
+    table.insert(Buttons, Button)
+end
+
+VRBottomBar:Add(Buttons[2])
+VRBottomBar:Add(Buttons[1], 1)
+VRBottomBar:Add(Buttons[4])
+VRBottomBar:Add(Buttons[3], 3)

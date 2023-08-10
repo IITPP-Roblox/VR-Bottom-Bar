@@ -37,9 +37,24 @@ end
 
 --[[
 Adds a button, either to the end or a given index.
+Throws an error if there is a problem with the button (scale width used without RelativeYY size constraint.)
 --]]
 function VRBottomBar:Add(Frame: GuiObject, Index: number?): ()
-	
+    --Throw an error if a width scale is used without RelativeYY.
+	if Frame.Size.Width.Scale ~= 0 and Frame.SizeConstraint ~= Enum.SizeConstraint.RelativeYY then
+		error("Frame has a non-zero relative width but SizeConstraint is not RelativeYY. This will cause problems with bar sizing.")
+	end
+
+    --Add the button.
+    if self.FrameContainer then
+        Frame.Parent = self.FrameContainer
+    end
+    if Index then
+        table.insert(self.Frames, Index, Frame)
+    else
+        table.insert(self.Frames, Frame)
+    end
+    self:UpdateFrames()
 end
 
 --[[
@@ -83,11 +98,16 @@ function VRBottomBar:ForceSetUp(): ()
     FrameContainer.Size = UDim2.new(1, -20, 1, -20)
     FrameContainer.Position = UDim2.new(0, 10, 0, 10)
     FrameContainer.Parent = Background
+    self.FrameContainer = FrameContainer
 
     local UIListLayout = Instance.new("UIListLayout")
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout.FillDirection = Enum.FillDirection.Horizontal
     UIListLayout.Parent = FrameContainer
+
+    for _, Frame in self.Frames do
+        Frame.Parent = FrameContainer
+    end
 
     local Weld = Instance.new("Weld")
     Weld.Part0 = BottomBar
