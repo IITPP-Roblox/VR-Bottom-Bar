@@ -6,6 +6,7 @@ Types uses by the VR bottom bar.
 --!strict
 
 export type VRBottomBar = {
+    SetUpCalled: false,
     Frames: {GuiObject},
     SurfaceGui: SurfaceGui?,
     FrameContainer: Frame?,

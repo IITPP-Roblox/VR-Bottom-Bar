@@ -21,6 +21,7 @@ local TopbarPlusContext = require(script:WaitForChild("TopbarPlusContext"))
 local Types = require(script:WaitForChild("Types"))
 
 local VRBottomBar = {} :: Types.VRBottomBar
+VRBottomBar.SetUpCalled = false
 VRBottomBar.Frames = {} :: {GuiObject}
 
 
@@ -121,6 +122,12 @@ Sets up the bottom bar regardless if VR is enabled or not.
 Make sure to check if VREnabled is true before running.
 --]]
 function VRBottomBar:SetUp(): ()
+    --Return if SetUp was already called.
+    if self.SetUpCalled then
+        return
+    end
+    self.SetUpCalled = true :: any --Roblox typing sees SetUpCalled as false instead of boolean.
+
     task.spawn(function()
         --Find the bottom bar.
         --This is expected to break at some point in the future. A simple rename or changing the parent will break this.
