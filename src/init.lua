@@ -22,14 +22,13 @@ VRBottomBar.Frames = {} :: {GuiObject}
 
 --[[
 Returns the index of a frame.
-Throws an error if the frame is not found.
 --]]
-function VRBottomBar:GetFrameIndex(Frame: GuiObject): number
+function VRBottomBar:GetFrameIndex(Frame: GuiObject): number?
     for i, OtherFrame in self.Frames do
         if Frame ~= OtherFrame then continue end
         return i
     end
-    error("Frame "..tostring(Frame).." not found.")
+    return nil
 end
 
 --[[
@@ -52,9 +51,14 @@ Adds a frame, either to the end or a given index.
 Throws an error if there is a problem with the button (scale width used without RelativeYY size constraint.)
 --]]
 function VRBottomBar:Add(Frame: GuiObject, Index: number?): ()
+    --Throw an error if the frame already was added.
+    if self:GetFrameIndex(Frame) then
+        error("GuiObject "..tostring(Frame).." was already added.")
+    end
+
     --Throw an error if a width scale is used without RelativeYY.
 	if Frame.Size.Width.Scale ~= 0 and Frame.SizeConstraint ~= Enum.SizeConstraint.RelativeYY then
-		error("Frame has a non-zero relative width but SizeConstraint is not RelativeYY. This will cause problems with bar sizing.")
+		error("GuiObject "..tostring(Frame).." has a non-zero relative width but SizeConstraint is not RelativeYY. This will cause problems with bar sizing.")
 	end
 
     --Add the button.
@@ -74,7 +78,11 @@ Adds a frame relative to the position of another.
 Throws an error if the frame is not part of the bottom bar.
 --]]
 function VRBottomBar:AddRelative(Frame: GuiObject, RelativeFrame: GuiObject, Offset: number): ()
-    self:Add(Frame, (self:GetFrameIndex(RelativeFrame) :: number) + Offset)
+    local ExistingIndex = self:GetFrameIndex(RelativeFrame) :: number?
+    if not ExistingIndex then
+        error("GuiObject "..tostring(Frame).." not found.")
+    end
+    self:Add(Frame, ExistingIndex + Offset)
 end
 
 --[[
