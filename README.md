@@ -23,18 +23,18 @@ can be added to the bottom bar with a couple of methods.
 ```lua
 local VRBottomBar = require(game:GetService("ReplicatedStorage"):WaitForChild("VRBottomBar"))
 
+local Buttons = {}
+for i = 1, 4 do
+    local Button = Instance.new("TextButton")
+    Button.Size = UDim2.new(1, 0, 1, 0)
+    Button.SizeConstraint = Enum.SizeConstraint.RelativeYY --When a scale width is used, RelativeYY MUST be used.
+    Button.Text = tostring(i)
+    Button.Parent = Somewhere --Make sure to parent any frames somewhere so that there is a fallback option when this eventually breaks.
+    table.insert(Buttons, Button)
+end
+
 if game:GetService("UserInputService").VREnabled then
     VRBottomBar:SetUp()
-
-    local Buttons = {}
-    for i = 1, 4 do
-        local Button = Instance.new("TextButton")
-        Button.Size = UDim2.new(1, 0, 1, 0)
-        Button.SizeConstraint = Enum.SizeConstraint.RelativeYY --When a scale width is used, RelativeYY MUST be used.
-        Button.Text = tostring(i)
-        Button.Parent = Somewhere --Make sure to parent any frames somewhere so that there is a fallback option when this eventually breaks.
-        table.insert(Buttons, Button)
-    end
 
     VRBottomBar:Add(Buttons[4]) --Adds a button to the end.
     VRBottomBar:AddBefore(Buttons[1], Buttons[4]) --Adds a button right before another.
