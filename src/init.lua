@@ -15,6 +15,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
+local TopbarPlusContext = require(script:WaitForChild("TopbarPlusContext"))
 local Types = require(script:WaitForChild("Types"))
 
 local VRBottomBar = {} :: Types.VRBottomBar
@@ -101,6 +102,16 @@ Throws an error if the frame is not part of the bottom bar.
 --]]
 function VRBottomBar:AddAfter(Frame: GuiObject, RelativeFrame: GuiObject): ()
     self:AddRelative(Frame, RelativeFrame, 1)
+end
+
+--[[
+Creates a context for managing TopbarPlus.
+--]]
+function VRBottomBar:WithTopbarPlus(TopbarPlus: any): Types.TopbarPlusContext
+    if not self.TopbarPlusContext then
+        self.TopbarPlusContext = TopbarPlusContext.new(self, TopbarPlus)
+    end
+    return TopbarPlusContext
 end
 
 --[[
