@@ -111,7 +111,7 @@ function VRBottomBar:WithTopbarPlus(TopbarPlus: any): Types.TopbarPlusContext
     if not self.TopbarPlusContext then
         self.TopbarPlusContext = TopbarPlusContext.new(self, TopbarPlus)
     end
-    return TopbarPlusContext
+    return self.TopbarPlusContext :: Types.TopbarPlusContext
 end
 
 --[[

@@ -9,6 +9,7 @@ export type VRBottomBar = {
     Frames: {GuiObject},
     SurfaceGui: SurfaceGui?,
     FrameContainer: Frame?,
+    TopbarPlusContext: TopbarPlusContext?,
 
     GetFrameIndex: (self: VRBottomBar, Frame: GuiObject) -> (number?),
     UpdateFrames: (self: VRBottomBar) -> (),
@@ -28,6 +29,7 @@ export type TopbarPlusContext = {
 
     new: (VRBottomBar: VRBottomBar, TopbarPlus: any) -> (TopbarPlusContext),
     Add: (self: TopbarPlusContext, TopbarPlusIcon: any, Index: number?) -> (),
+    AddNexusVRCharacterModelMenuButton: (self: TopbarPlusContext, Index: number?) -> (),
 }
 
 return true

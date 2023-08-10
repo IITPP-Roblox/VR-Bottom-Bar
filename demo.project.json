@@ -4,13 +4,16 @@
         "$className": "DataModel",
         "ReplicatedStorage": {
             "$className": "ReplicatedStorage",
-            "$path": "./demo/ReplicatedStorage",
             "Icon": {
                 "$path": "./demo/module/TopbarPlus/src/Icon"
             },
             "VRBottomBar": {
                 "$path": "."
             }
+        },
+        "ServerScriptService": {
+            "$className": "ServerScriptService",
+            "$path": "./demo/ServerScriptService"
         },
         "StarterPlayer": {
             "$className": "StarterPlayer",

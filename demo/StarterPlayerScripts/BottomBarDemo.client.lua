@@ -11,6 +11,7 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
 local VRBottomBar = require(ReplicatedStorage:WaitForChild("VRBottomBar"))
+local TopbarPlus = require(ReplicatedStorage:WaitForChild("Icon"))
 
 --Create the fake bottom bar when not in VR.
 if not UserInputService.VREnabled then
@@ -56,6 +57,9 @@ VRBottomBar:Add(Buttons[4])
 VRBottomBar:AddBefore(Buttons[1], Buttons[4])
 VRBottomBar:AddAfter(Buttons[2], Buttons[1])
 VRBottomBar:Add(Buttons[3], 3)
+
+local TopbarPlusContext = VRBottomBar:WithTopbarPlus(TopbarPlus)
+TopbarPlusContext:AddNexusVRCharacterModelMenuButton(1)
 
 --Demo error cases.
 xpcall(function()
