@@ -52,7 +52,7 @@ for i = 1, 4 do
     table.insert(Buttons, Button)
 end
 
-VRBottomBar:Add(Buttons[2])
-VRBottomBar:Add(Buttons[1], 1)
 VRBottomBar:Add(Buttons[4])
+VRBottomBar:AddBefore(Buttons[1], Buttons[4])
+VRBottomBar:AddAfter(Buttons[2], Buttons[1])
 VRBottomBar:Add(Buttons[3], 3)
