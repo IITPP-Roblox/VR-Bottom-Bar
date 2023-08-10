@@ -56,7 +56,7 @@ local Configuration = {
         --set this to false, you will lock players from being
         --able to change camera options, movement options,
         --recallibration, and chat.
-        MenuToggleGestureActive = true,
+        MenuToggleGestureActive = false,
     },
     Output = {
         --To suppress warnings from Nexus VR Character Model
