@@ -10,6 +10,9 @@ safe, and then add them to the bar).
 --]]
 --!strict
 
+local FRAME_PADDING = 30
+local BORDER_PADDING = 20
+
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -135,7 +138,7 @@ function VRBottomBar:SetUp(): ()
         SurfaceGui.Name = "VRSecondaryBottomBar"
         SurfaceGui.ResetOnSpawn = false
         SurfaceGui.AlwaysOnTop = true
-        SurfaceGui.CanvasSize = Vector2.new(0, 210)
+        SurfaceGui.CanvasSize = Vector2.new(0, 200 + (2 * BORDER_PADDING))
         SurfaceGui.Adornee = SecondaryBottomBar
         SurfaceGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
         self.SurfaceGui = SurfaceGui
@@ -153,14 +156,15 @@ function VRBottomBar:SetUp(): ()
 
         local FrameContainer = Instance.new("Frame")
         FrameContainer.BackgroundTransparency = 1
-        FrameContainer.Size = UDim2.new(1, -20, 1, -20)
-        FrameContainer.Position = UDim2.new(0, 10, 0, 10)
+        FrameContainer.Size = UDim2.new(1, -(2 * BORDER_PADDING), 1, -(2 * BORDER_PADDING))
+        FrameContainer.Position = UDim2.new(0, BORDER_PADDING, 0, BORDER_PADDING)
         FrameContainer.Parent = Background
         self.FrameContainer = FrameContainer
 
         local UIListLayout = Instance.new("UIListLayout")
         UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
         UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+        UIListLayout.Padding = UDim.new(0, FRAME_PADDING)
         UIListLayout.Parent = FrameContainer
 
         for _, Frame in self.Frames do
@@ -181,11 +185,11 @@ function VRBottomBar:SetUp(): ()
         end)
 
         RunService:BindToRenderStep("ExtendedVRBottomBarUpdate", Enum.RenderPriority.First.Value + 1, function()
-            local ContentSizeX = UIListLayout.AbsoluteContentSize.X + 20
-            UIListLayout.Padding = UDim.new(0, 0.05 * 220)
-            SecondaryBottomBar.Size = Vector3.new(BottomBar.Size.Y * (ContentSizeX / 220), BottomBar.Size.Y, BottomBar.Size.Z)
+            local ContentSizeX = UIListLayout.AbsoluteContentSize.X + (2 * BORDER_PADDING)
+            local Height = 200 + (2 * BORDER_PADDING)
+            SecondaryBottomBar.Size = Vector3.new(BottomBar.Size.Y * (ContentSizeX / Height), BottomBar.Size.Y, BottomBar.Size.Z)
             Weld.C1 = CFrame.new(0, 1.1 * BottomBar.Size.Y, 0)
-            SurfaceGui.CanvasSize = Vector2.new(ContentSizeX, 220)
+            SurfaceGui.CanvasSize = Vector2.new(ContentSizeX, Height)
         end)
         self:UpdateFrames()
     end)
