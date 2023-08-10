@@ -18,7 +18,6 @@ export type VRBottomBar = {
     AddBefore: (self: VRBottomBar, Frame: GuiObject, RelativeFrame: GuiObject) -> (),
     AddAfter: (self: VRBottomBar, Frame: GuiObject, RelativeFrame: GuiObject) -> (),
     WithTopbarPlus: (self: VRBottomBar, TopbarPlus: any) -> (TopbarPlusContext),
-    ForceSetUp: (self: VRBottomBar) -> (),
     SetUp: (self: VRBottomBar) -> (),
 }
 

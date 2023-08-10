@@ -35,12 +35,8 @@ end
 
 --Set up the bottom bar.
 --Order does not matter.
-if UserInputService.VREnabled then
-    VRBottomBar:SetUp()
-else
-    --DO NOT RUN THIS IN NORMAL GAMES. THIS IS ONLY FOR THE DEMO.
-    VRBottomBar:ForceSetUp()
-end
+--ONLY THE SETUP WHEN VrEnabled IS true.
+VRBottomBar:SetUp()
 
 local Buttons = {}
 for i = 1, 4 do
