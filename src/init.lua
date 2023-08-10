@@ -15,7 +15,9 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
-local VRBottomBar = {}
+local Types = require(script:WaitForChild("Types"))
+
+local VRBottomBar = {} :: Types.VRBottomBar
 VRBottomBar.Frames = {} :: {GuiObject}
 
 
