@@ -13,7 +13,6 @@ safe, and then add them to the bar).
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
 
 local TopbarPlusContext = require(script:WaitForChild("TopbarPlusContext"))
 local Types = require(script:WaitForChild("Types"))
