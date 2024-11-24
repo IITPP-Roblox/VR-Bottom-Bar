@@ -1,8 +1,4 @@
---[[
-TheNexusAvenger
-
-Demo for the VR bottom bar.
---]]
+--Demo for the VR bottom bar.
 --!strict
 
 local Workspace = game:GetService("Workspace")
