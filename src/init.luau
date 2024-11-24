@@ -1,6 +1,4 @@
 --[[
-TheNexusAvenger
-
 Creates a second VR menu bar for small icons.
 
 NOTE: This module is NOT supported by Roblox. Any changes
@@ -18,18 +16,23 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local TopbarPlusContext = require(script:WaitForChild("TopbarPlusContext"))
-local Types = require(script:WaitForChild("Types"))
 
-local VRBottomBar = {} :: Types.VRBottomBar
+local VRBottomBar = {}
 VRBottomBar.SetUpCalled = false
 VRBottomBar.Frames = {} :: {GuiObject}
+
+export type VRBottomBar = {
+    SurfaceGui: SurfaceGui?,
+    FrameContainer: Frame?,
+    TopbarPlusContext: TopbarPlusContext.TopbarPlusContext?,
+} & typeof(VRBottomBar)
 
 
 
 --[[
 Returns the index of a frame.
 --]]
-function VRBottomBar:GetFrameIndex(Frame: GuiObject): number?
+function VRBottomBar.GetFrameIndex(self: VRBottomBar, Frame: GuiObject): number?
     for i, OtherFrame in self.Frames do
         if Frame ~= OtherFrame then continue end
         return i
@@ -40,7 +43,7 @@ end
 --[[
 Updates the adorned frames.
 --]]
-function VRBottomBar:UpdateFrames(): ()
+function VRBottomBar.UpdateFrames(self: VRBottomBar): ()
     --Update the layout of the frames.
     for i, Frame in self.Frames do
         Frame.LayoutOrder = i
@@ -56,15 +59,15 @@ end
 Adds a frame, either to the end or a given index.
 Throws an error if there is a problem with the button (scale width used without RelativeYY size constraint.)
 --]]
-function VRBottomBar:Add(Frame: GuiObject, Index: number?): ()
+function VRBottomBar.Add(self: VRBottomBar, Frame: GuiObject, Index: number?): ()
     --Throw an error if the frame already was added.
     if self:GetFrameIndex(Frame) then
-        error("GuiObject "..tostring(Frame).." was already added.")
+        error(`GuiObject {Frame} was already added.`)
     end
 
     --Throw an error if a width scale is used without RelativeYY.
 	if Frame.Size.Width.Scale ~= 0 and Frame.SizeConstraint ~= Enum.SizeConstraint.RelativeYY then
-		error("GuiObject "..tostring(Frame).." has a non-zero relative width but SizeConstraint is not RelativeYY. This will cause problems with bar sizing.")
+		error(`GuiObject {Frame} has a non-zero relative width but SizeConstraint is not RelativeYY. This will cause problems with bar sizing.`)
 	end
 
     --Add the button.
@@ -83,10 +86,10 @@ end
 Adds a frame relative to the position of another.
 Throws an error if the frame is not part of the bottom bar.
 --]]
-function VRBottomBar:AddRelative(Frame: GuiObject, RelativeFrame: GuiObject, Offset: number): ()
+function VRBottomBar.AddRelative(self: VRBottomBar, Frame: GuiObject, RelativeFrame: GuiObject, Offset: number): ()
     local ExistingIndex = self:GetFrameIndex(RelativeFrame) :: number?
     if not ExistingIndex then
-        error("GuiObject "..tostring(Frame).." not found.")
+        error(`GuiObject {Frame} not found.`)
     end
     self:Add(Frame, ExistingIndex + Offset)
 end
@@ -95,7 +98,7 @@ end
 Adds a frame right before another.
 Throws an error if the frame is not part of the bottom bar.
 --]]
-function VRBottomBar:AddBefore(Frame: GuiObject, RelativeFrame: GuiObject): ()
+function VRBottomBar.AddBefore(self: VRBottomBar, Frame: GuiObject, RelativeFrame: GuiObject): ()
     self:AddRelative(Frame, RelativeFrame, 0)
 end
 
@@ -103,25 +106,25 @@ end
 Adds a frame right after another.
 Throws an error if the frame is not part of the bottom bar.
 --]]
-function VRBottomBar:AddAfter(Frame: GuiObject, RelativeFrame: GuiObject): ()
+function VRBottomBar.AddAfter(self: VRBottomBar, Frame: GuiObject, RelativeFrame: GuiObject): ()
     self:AddRelative(Frame, RelativeFrame, 1)
 end
 
 --[[
 Creates a context for managing TopbarPlus.
 --]]
-function VRBottomBar:WithTopbarPlus(TopbarPlus: any): Types.TopbarPlusContext
+function VRBottomBar.WithTopbarPlus(self: VRBottomBar, TopbarPlus: any): TopbarPlusContext.TopbarPlusContext
     if not self.TopbarPlusContext then
         self.TopbarPlusContext = TopbarPlusContext.new(self, TopbarPlus)
     end
-    return self.TopbarPlusContext :: Types.TopbarPlusContext
+    return self.TopbarPlusContext :: TopbarPlusContext.TopbarPlusContext
 end
 
 --[[
 Sets up the bottom bar regardless if VR is enabled or not.
 Make sure to check if VREnabled is true before running.
 --]]
-function VRBottomBar:SetUp(): ()
+function VRBottomBar.SetUp(self: VRBottomBar): ()
     --Return if SetUp was already called.
     if self.SetUpCalled then
         return
@@ -204,4 +207,4 @@ end
 
 
 
-return VRBottomBar
+return VRBottomBar :: VRBottomBar
