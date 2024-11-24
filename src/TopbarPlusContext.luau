@@ -31,7 +31,6 @@ function TopbarPlusContext.Add(self: TopbarPlusContext, TopbarPlusIcon: any, Ind
     IconFrame.BackgroundTransparency = 1
     IconFrame.Size = UDim2.new(0, 0, 1, 0)
     IconFrame.AutomaticSize = Enum.AutomaticSize.X
-    IconFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
 
     local Widget = TopbarPlusIcon:getInstance("Widget")
     Widget.Parent = IconFrame
