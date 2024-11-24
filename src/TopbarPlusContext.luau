@@ -29,12 +29,13 @@ Adds a TopbarPlus icon, either to the end or a given index.
 function TopbarPlusContext.Add(self: TopbarPlusContext, TopbarPlusIcon: any, Index: number?): ()
     local IconFrame = Instance.new("Frame")
     IconFrame.BackgroundTransparency = 1
-    IconFrame.Size = UDim2.new(1, 0, 1, 0)
+    IconFrame.Size = UDim2.new(0, 0, 1, 0)
+    IconFrame.AutomaticSize = Enum.AutomaticSize.X
     IconFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
-    
-    local IconButton = TopbarPlusIcon.instances.iconButton
-    IconButton.Parent = IconFrame
-    TopbarPlusIcon.instances.iconOverlay.Parent = IconButton
+
+    local Widget = TopbarPlusIcon:getInstance("Widget")
+    Widget.Parent = IconFrame
+    TopbarPlusIcon.parentIconUID = "VRBottomBar" --Hack to prevent the overflow menu from grabbing the icon.
     self.VRBottomBar:Add(IconFrame, Index)
 end
 

@@ -8,11 +8,12 @@ safe, and then add them to the bar).
 --]]
 --!strict
 
-local FRAME_PADDING = 30
-local BORDER_PADDING = 20
+local BORDER_PADDING_MULTIPLIER = 0.1
+local FRAME_PADDING_MULTIPLIER = 0.15
 
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
+local GuiService = game:GetService("GuiService")
 local RunService = game:GetService("RunService")
 
 local TopbarPlusContext = require(script:WaitForChild("TopbarPlusContext"))
@@ -136,7 +137,13 @@ function VRBottomBar.SetUp(self: VRBottomBar): ()
         --This is expected to break at some point in the future. A simple rename or changing the parent will break this.
         local BottomBar = Workspace.CurrentCamera:WaitForChild("VRCorePanelParts"):WaitForChild("BottomBar_Part") :: BasePart
 
+        --Determine the icon height.
+        --This should match TopbarPlus's themes.
+        local IconHeight = (GuiService.TopbarInset.Height == 36 and 32 or 44)
+
         --Create the new bottom bar.
+        local BorderPadding = BORDER_PADDING_MULTIPLIER * IconHeight
+        local FramePadding = FRAME_PADDING_MULTIPLIER * IconHeight
         local SecondaryBottomBar = Instance.new("Part")
         SecondaryBottomBar.Transparency = 1
         SecondaryBottomBar.Name = "ExtendedBottomBar"
@@ -148,7 +155,7 @@ function VRBottomBar.SetUp(self: VRBottomBar): ()
         SurfaceGui.Name = "VRSecondaryBottomBar"
         SurfaceGui.ResetOnSpawn = false
         SurfaceGui.AlwaysOnTop = true
-        SurfaceGui.CanvasSize = Vector2.new(0, 200 + (2 * BORDER_PADDING))
+        SurfaceGui.CanvasSize = Vector2.new(0, IconHeight + (2 * BorderPadding))
         SurfaceGui.Adornee = SecondaryBottomBar
         SurfaceGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
         self.SurfaceGui = SurfaceGui
@@ -166,15 +173,15 @@ function VRBottomBar.SetUp(self: VRBottomBar): ()
 
         local FrameContainer = Instance.new("Frame")
         FrameContainer.BackgroundTransparency = 1
-        FrameContainer.Size = UDim2.new(1, -(2 * BORDER_PADDING), 1, -(2 * BORDER_PADDING))
-        FrameContainer.Position = UDim2.new(0, BORDER_PADDING, 0, BORDER_PADDING)
+        FrameContainer.Size = UDim2.new(1, -(2 * BorderPadding), 1, -(2 * BorderPadding))
+        FrameContainer.Position = UDim2.new(0, BorderPadding, 0, BorderPadding)
         FrameContainer.Parent = Background
         self.FrameContainer = FrameContainer
 
         local UIListLayout = Instance.new("UIListLayout")
         UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
         UIListLayout.FillDirection = Enum.FillDirection.Horizontal
-        UIListLayout.Padding = UDim.new(0, FRAME_PADDING)
+        UIListLayout.Padding = UDim.new(0, FramePadding)
         UIListLayout.Parent = FrameContainer
 
         for _, Frame in self.Frames do
@@ -195,8 +202,8 @@ function VRBottomBar.SetUp(self: VRBottomBar): ()
         end)
 
         RunService:BindToRenderStep("ExtendedVRBottomBarUpdate", Enum.RenderPriority.First.Value + 1, function()
-            local ContentSizeX = UIListLayout.AbsoluteContentSize.X + (2 * BORDER_PADDING)
-            local Height = 200 + (2 * BORDER_PADDING)
+            local ContentSizeX = UIListLayout.AbsoluteContentSize.X + (2 * BorderPadding)
+            local Height = IconHeight + (2 * BorderPadding)
             SecondaryBottomBar.Size = Vector3.new(BottomBar.Size.Y * (ContentSizeX / Height), BottomBar.Size.Y, BottomBar.Size.Z)
             Weld.C1 = CFrame.new(0, 1.1 * BottomBar.Size.Y, 0)
             SurfaceGui.CanvasSize = Vector2.new(ContentSizeX, Height)
