@@ -7,7 +7,7 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
 local VRBottomBar = require(ReplicatedStorage:WaitForChild("VRBottomBar"))
-local TopbarPlus = require(ReplicatedStorage:WaitForChild("Icon"))
+local TopbarPlus = require(ReplicatedStorage:WaitForChild("Packages"):WaitForChild("TopbarPlus"))
 
 --Create the fake bottom bar when not in VR.
 if not UserInputService.VREnabled then

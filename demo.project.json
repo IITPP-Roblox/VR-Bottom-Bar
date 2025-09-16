@@ -4,8 +4,8 @@
         "$className": "DataModel",
         "ReplicatedStorage": {
             "$className": "ReplicatedStorage",
-            "Icon": {
-                "$path": "./demo/module/TopbarPlus/src/Icon"
+            "Packages": {
+                "$path": "./Packages/"
             },
             "VRBottomBar": {
                 "$path": "."
